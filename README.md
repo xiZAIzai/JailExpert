@@ -1,6 +1,6 @@
 # JailExpert
 
-![method]()
+![method](./imgs/framework.png)
 
 This is the official repository for our paper [Stand on The Shoulders of Giants: Building JailExpert from Previous Attack Experience]().
 
