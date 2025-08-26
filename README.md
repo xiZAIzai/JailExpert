@@ -14,21 +14,31 @@ we propose the **JailExpert**, an automated jailbreak framework, which is the fi
 
 ### Setup
 
-We require [test](1) for quick evaluation and the latest FastChat for searching on Llama3. Follow these steps to set up the required dependencies:
-
-Then, install the remaining dependencies:
-
-### Searching code
-
-#### Data Construction
-
-We provide a script to construct search data for GCG-Adaptive and our method:
+The attack implementation of JailExpert require dependencies can be installed by:
 
 ```shell
-cd 
+pip install -r requirements.txt
 ```
 
-#### Running the Search Script
+### Experience Pool Initialization
+
+We require [EasyJailbreak](https://github.com/EasyJailbreak/EasyJailbreak) for the experience pool initialization, you guys can follow up the implementation of it and execute the methods including: ReNeLLM, GPTFuzzer, JailBroken and CodeChameleon. And use the use the **transfer.py** to transfer all attack results to the following experience pattern:
+
+```shell
+    {
+        "mutation": [], # sampled mutation list
+        "full_query": "", # final jailbreak prompt
+        "pre_query": "", # original question(query)
+        "response": "", # LLM response
+        "harmfulness_score": 5, # harmful score evaluated by Judge LLM
+        "method": "", # jailbreak prompt
+        "success_times": 1, # default to 1
+        "false_times": 0,
+    },
+```
+
+
+#### Running the attack Script
 
 We build upon the GCG attack framework and integrate our method. Use the following commands to run the search:
 
