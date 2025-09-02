@@ -22,10 +22,14 @@ pip install -r requirements.txt
 
 ### Experience Pool Initialization
 
-We require [EasyJailbreak](https://github.com/EasyJailbreak/EasyJailbreak) for the experience pool initialization, you guys can follow up the implementation of it and execute the methods including: ReNeLLM, GPTFuzzer, JailBroken and CodeChameleon. And use the use the **transfer.py** to transfer all attack results to the following experience pattern:
+We require [EasyJailbreak](https://github.com/EasyJailbreak/EasyJailbreak) for the experience pool initialization, you guys can follow up the implementation of it and execute the methods including: ReNeLLM, GPTFuzzer, JailBroken and CodeChameleon. And use the use the **transfer.py** to transfer all attack results to the pre-defined jailbreak experience pattern:
 
 ```shell
-    {
+   python transfer.py input_file output_file
+
+   # which the inputed attack results file support xlsx, csv, pkl, pickle, json
+   # single attack obj in each type of attack results should contains keys include: 
+   '''
         "mutation": [], # sampled mutation list
         "full_query": "", # final jailbreak prompt
         "pre_query": "", # original question(query)
@@ -34,7 +38,7 @@ We require [EasyJailbreak](https://github.com/EasyJailbreak/EasyJailbreak) for t
         "method": "", # jailbreak prompt
         "success_times": 1, # default to 1
         "false_times": 0,
-    },
+   '''
 ```
 
 
