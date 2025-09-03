@@ -8,6 +8,8 @@ import numpy as np
 from typing import List
 from mutation import *
 from model_utils import OpenAIClient
+from experience_state import JailbreakState
+from tqdm import tqdm
 
 def normalize(value, min_val=0, max_val=5):
     if min_val == max_val:
@@ -130,7 +132,23 @@ def compute_similarity(vector_a, vector_b):
     return dot_product / (norm_a * norm_b)
 
 
-
-
+def convert_to_jailbreak_state(experience_pool):
+    jailbreak_states = []
+    for entry in tqdm(experience_pool, desc="Converting experiences"):
+        try:
+            state = JailbreakState(
+                    pre_query=entry.get("pre_query", ""),
+                    full_query=entry.get("full_query", ""),
+                    response=entry.get("response", ""),
+                    harmfulness_score=entry.get("harmfulness_score", 0),
+                    mutation=entry.get("mutation", []),
+                    method=entry.get("method", ""),
+                    success_times=entry.get("success_times", 0),
+                    false_times=entry.get("false_times", 0)
+            )
+            jailbreak_states.append(state)
+        except Exception as e:
+            logging.info(f"Error processing entry: {entry}. Error: {e}")
+    return jailbreak_states
 
 
