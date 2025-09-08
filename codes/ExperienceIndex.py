@@ -16,7 +16,7 @@ from utils import make_hashable
 logging.basicConfig(level=logging.INFO, format='%(threadName)s: %(message)s')
 random.seed(2025)
 
-class ExperienceIndexVersion4:
+class experienceIndex:
     def __init__(self, scalar_weight=0.1, semantic_weight=0.9, max_clusters=10):
         """
         Experience index with clustering and pattern extraction.

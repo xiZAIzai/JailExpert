@@ -8,9 +8,27 @@ from fastchat.conversation import get_conv_template
 from transformers import RobertaForSequenceClassification, RobertaTokenizer
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from attack_utils import extract_content
-
 from pattern import LLAMA2_CLS_PROMPT
+
+def extract_content(tag, text):
+    start_idx = text.find(tag)
+    if start_idx == -1:
+        return None
+    content_after_tag = text[start_idx+len(tag):].strip()
+    parts = content_after_tag.split()
+    
+    if tag == "#thescore:":
+        if parts[0].isdigit():
+            return int(parts[0])
+        if len(parts) > 1:
+            if parts[1].isdigit():
+                return int(parts[1])
+        if parts[0][0].isdigit():
+            return int(parts[0][0])
+    else:
+        end_idx = text.find("#", start_idx + 1)
+        return content_after_tag if end_idx == -1 else content_after_tag[:end_idx].strip()
+
 
 class OpenAIClient:
     def __init__(self, api_key: str, base_url: str = None):

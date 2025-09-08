@@ -15,29 +15,39 @@ def attack_parser():
     exp_group.add_argument("--experience_name", type=str, default="llama-2",
                            choices=["llama-2", "llama-3", "gpt-4-turbo", "gpt-4-0613", "gemini-1.5-pro",
                                     "llama-2-13b", "gpt-3.5-turbo-1106", "llama-2-unlearned-Full"],
-                           help="Name of the experience pool")
+                           help="experience sources for different target models")
     exp_group.add_argument("--experience_type", type=str, default="renellm",
                            choices=["full", "renellm", "GPTFuzzer", "codeChameleon", "jailbroken"],
-                           help="Type of experience used")
+                           help="Type of experience used, full if for main experiment, other is for ablation study of single")
     exp_group.add_argument("--strategy", type=str, default="single",
                            choices=["baseline", "random", "no_dynamic", "no_simappend", "single"],
-                           help="Attack strategy selection")
+                           help="Attack strategy selection, baseline is for main experiment, other is for ablation study")
     exp_group.add_argument("--top_k", type=float, default=1.0,
-                           help="Top K value for retrieval")
+                           help="default to 1.0")
+    exp_group.add_argument("--save_path", type=str, default="JailExpert_results",
+                           help="Path to save attack results")
     
     # Model parameters for attack
     model_group = parser.add_argument_group("Model Parameters", "Configuration for target, attack, and evaluation models")
+    model_group.add_argument("--target_api", type=str, default="sk-",
+                             help="API key for accessing the target model")
     model_group.add_argument("--target_model", type=str, default="Llama-2-7b-chat-hf",
                              choices=["Llama-2-13b-chat-hf", "Llama-2-7b-chat-hf", "Llama-2-7b-chat-hf-unlearned",
                                       "Meta-Llama-3-8B-Instruct", "gemini-1.5-pro", "gpt-3.5-turbo-1106",
                                       "gpt-4-turbo", "gpt-4", "gpt-oss-20b"],
                              help="Target LLM for jailbreak attack")
-    model_group.add_argument("--target_api", type=str, default="sk-",
-                             help="API key for accessing the target model")
     model_group.add_argument("--attack_api", type=str, default="sk-",
                              help="API key for the attack model")
+    model_group.add_argument("--attack_model", type=str, default="gpt-3.5-turbo-1106",
+                             choices=["gpt-3.5-turbo-1106", "gpt-4-turbo", "gpt-4", "gpt-oss-20b"],
+                             help="Model used to generate attack prompts")
     model_group.add_argument("--eval_api", type=str, default="sk-",
                              help="API key for the evaluation model")
+    model_group.add_argument("--eval_model", type=str, default="gpt-4-turbo",
+                             choices=["gpt-4-turbo", "gpt-4"],
+                             help="Model used to evaluate attack success")
+    model_group.add_argument("--base_url", type=str, default="",
+                             help="Base URL for the API")
     
     # Device configuration
     device_group = parser.add_argument_group("Device Settings", "Hardware configuration")

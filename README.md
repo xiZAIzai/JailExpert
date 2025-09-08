@@ -41,39 +41,28 @@ We require [EasyJailbreak](https://github.com/EasyJailbreak/EasyJailbreak) for t
    '''
 ```
 
+we will soon give experience pool out...
+
 
 #### Running the attack Script
 
 We build upon the GCG attack framework and integrate our method. Use the following commands to run the search:
 
 ```shell
-bash 
+bash ./run_bashes/run.sh
 ```
 
-Remember to change the running config in `./scripts/configs`
+Remember to change the running parameters in `./codes/parser.py`
 
-#### Post Processing
 
-We provide scripts to extract adversarial prompts from log files and combine them with test questions and model chat templates:
 
-```shell
-python
-```
-
-### Generation
-
-After searching for the adversarial attack prompt, we provide a script supporting batch generation to get the response of the model. Remember to change the model/tokenizer path and the input/output path.
-
-```shell
-cd
-```
-
-### Evaluation
-
-We support evaluation using `AISafetyLab`. Run the evaluation script as follows:
-
-```shell
-cd
-```
 
 ## Citation
+```shell
+@article{wang2025stand,
+  title={Stand on The Shoulders of Giants: Building JailExpert from Previous Attack Experience},
+  author={Wang, Xi and Jian, Songlei and Li, Shasha and Li, Xiaopeng and Ji, Bin and Ma, Jun and Liu, Xiaodong and Wang, Jing and Bao, Feilong and Zhang, Jianfeng and others},
+  journal={arXiv preprint arXiv:2508.19292},
+  year={2025}
+}
+```

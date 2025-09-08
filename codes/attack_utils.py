@@ -17,25 +17,6 @@ def normalize(value, min_val=0, max_val=5):
     normalized_value = (value - min_val) / (max_val - min_val)
     return np.clip(normalized_value, 0, 1)
 
-def extract_content(tag, text):
-    start_idx = text.find(tag)
-    if start_idx == -1:
-        return None
-    content_after_tag = text[start_idx+len(tag):].strip()
-    parts = content_after_tag.split()
-    
-    if tag == "#thescore:":
-        if parts[0].isdigit():
-            return int(parts[0])
-        if len(parts) > 1:
-            if parts[1].isdigit():
-                return int(parts[1])
-        if parts[0][0].isdigit():
-            return int(parts[0][0])
-    else:
-        end_idx = text.find("#", start_idx + 1)
-        return content_after_tag if end_idx == -1 else content_after_tag[:end_idx].strip()
-
 
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
