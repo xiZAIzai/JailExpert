@@ -35,12 +35,12 @@ class JailExpertWithCluster:
 
     def build_experience_index(self, args, flag=False, model_name=None, update=False, update_info=None,
                                load_from_initial=True, recluster=False, strategy="", top_k=1):
-        base_dir = f"./Faiss_index/version-4_{self.target_model_name}/{model_name}/{strategy}_{args.experience_type}/{top_k}"
+        base_dir = f"../faiss_index/{self.target_model_name}/{model_name}/{strategy}_{args.experience_type}/{top_k}"
         os.makedirs(base_dir, exist_ok=True)
         if not flag:
             if not update:
                 self.experience_index.build_index(self.experience_pool, strategy=strategy)
-                with open(f"./experiments/{args.experiment}_{self.target_model_name}/{model_name}/{strategy}_{args.experience_type}/{top_k}/former_experiences.json", "w", encoding="utf-8") as f:
+                with open(f"../experience/{args.experiment}_{self.target_model_name}/{model_name}/{strategy}_{args.experience_type}/{top_k}/former_experiences.json", "w", encoding="utf-8") as f:
                     json.dump([vars(state) for state in self.experience_pool], f, ensure_ascii=False, indent=4)
                 self.experience_index.save_index(
                     semantic_index_path=os.path.join(base_dir, "semantic_index.faiss"),
@@ -188,7 +188,7 @@ class JailExpertWithCluster:
                                                 recluster=recluster, strategy=strategy, top_k=top_k)
                     # 将更新后的经验池保存至文件
                     vars_states = [vars(state) for state in updated_states]
-                    update_save_path = f"./experiments/{args.experiment}_{self.target_model_name}/{experience_name}/{strategy}_{args.experience_type}/{top_k}/update_experiences.json"
+                    update_save_path = f"../experience/{args.experiment}_{self.target_model_name}/{experience_name}/{strategy}_{args.experience_type}/{top_k}/update_experiences.json"
                     with open(update_save_path, "w", encoding="utf-8") as f:
                         json.dump(vars_states, f, ensure_ascii=False, indent=4)
                     

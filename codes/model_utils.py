@@ -59,7 +59,9 @@ class HarmBenchPredictor(Predictor):
 
 
     def predict(self, query, responses):
-        prompt = LLAMA2_CLS_PROMPT["prompt"].format(behavior=query, generation=responses[0])
+        if not isinstance(responses, str):
+            responses = responses[0]
+        prompt = LLAMA2_CLS_PROMPT["prompt"].format(behavior=query, generation=responses)
         encoded = self.tokenizer([prompt], return_tensors='pt', padding='longest')
         with torch.no_grad():
             output_ids = self.model.generate(
